@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <string.h>
+
+
+// Structure Adresse imbriquée
+typedef struct {
+    char rue[50];
+    char ville[30];
+    int code_postal;
+} Adresse;
+
+// Structure Personne
+typedef struct {
+    char nom[30];
+    int age;
+    Adresse adresse;
+} Personne;
+
+Personne Ps[];
+int compteurpersonne = 0;
+
+void creerpersonne() {
+    printf("Saisir le nom: ");
+    scanf(" %[^\n]", Ps[compteurpersonne].nom);
+
+    printf("Saisir l'age: ");
+    scanf("%d", &Ps[compteurpersonne].age);
+
+    printf("Saisir la rue: ");
+    scanf(" %[^\n]", Ps[compteurpersonne].adresse.rue);
+
+    printf("Saisir la ville: ");
+    scanf(" %[^\n]", Ps[compteurpersonne].adresse.ville);
+
+    printf("Saisir le code postal: ");
+    scanf("%d", &Ps[compteurpersonne].adresse.code_postal);
+
+    compteurpersonne++;
+}
+
+void afficherpersonne() {
+    for (int i = 0; i < compteurpersonne; i++) {
+        printf("Personne %d\n", i + 1);
+        printf("Nom : %s\n", Ps[i].nom);
+        printf("age : %d\n", Ps[i].age);
+        printf("Ville : %s\n", Ps[i].adresse.ville);
+        printf("Rue : %s\n", Ps[i].adresse.rue);
+        printf("Code postal : %d\n", Ps[i].adresse.code_postal);
+    }
+}
+
+void modifierpersonne() {
+    int S;
+    printf("Entrer le numero de la personne à modifier (1 - %d): ", compteurpersonne);
+    scanf("%d", &S);
+
+    S--; // Convertir en indice de tableau
+
+    printf("Entrer nouveau nom : ");
+    scanf(" %[^\n]", Ps[S].nom);
+
+    printf("Entrer nouvel age : ");
+    scanf("%d", &Ps[S].age);
+
+    printf("Entrer nouvelle ville : ");
+    scanf(" %[^\n]", Ps[S].adresse.ville);
+
+    printf("Entrer nouvelle rue : ");
+    scanf(" %[^\n]", Ps[S].adresse.rue);
+
+    printf("Entrer nouveau code postal : ");
+    scanf("%d", &Ps[S].adresse.code_postal);
+}
+
+void supprimerpersonne() {
+    int S;
+    printf("Entrer le numero de la personne à supprimer (1 - %d): ", compteurpersonne);
+    scanf("%d", &S);
+
+    S--; // Convertir en indice de tableau
+
+    for (int i = S; i < compteurpersonne - 1; i++) {
+        Ps[i] = Ps[i + 1];
+    }
+
+}
+
+int main() {
+    int choix;
+
+    do {
+        printf("\n--- Menu ---\n");
+        printf("1. creer une personne\n");
+        printf("2. Afficher les personnes\n");
+        printf("3. Modifier une personne\n");
+        printf("4. Supprimer une personne\n");
+        printf("Choix: ");
+        scanf("%d", &choix);
+
+        switch (choix) {
+            case 1: creerpersonne(); break;
+            case 2: afficherpersonne(); break;
+            case 3: modifierpersonne(); break;
+            case 4: supprimerpersonne(); break;
+        }
+    } while (choix != 4);
+}
